@@ -27,15 +27,22 @@ const fs = require("node:fs/promises");
 async function writeEnvFile() {
   console.log("Before the await");
   try {
-    let result = await fs.writeFile("./nonexistentfolder/env", contentToWrite);
+    let result = await fs.writeFile(".env", contentToWrite);
     console.log(result);
   } catch (error) {
-    console.log("Errr occured writing the file:", error);
+    console.log("Error occured writing the file:", error);
   }
+
   console.log("After the await");
 }
-
 writeEnvFile();
+
+async function app() {
+  console.log("Before calling async writer");
+  await writeEnvFile();
+  console.log("After calling async writer");
+}
+app();
 
 // console.log("Before the promise");
 // fs.writeFile(".env", contentToWrite)
